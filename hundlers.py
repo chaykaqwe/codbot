@@ -40,7 +40,7 @@ async def giv_cod(message: Message):
             await message.answer("Код с таким id не найден.")
     else:
         sponsor = await get_sponsor()
-        await message.answer(f'подпишитесь на спосноров {sponsor.name}')
+        await message.answer(f'подпишитесь на спосноров {sponsor.name}', reply_markup=await kb.sponsor_invite_kb())
 
 
 async def send_advertisement(message: Message):
@@ -50,7 +50,7 @@ async def send_advertisement(message: Message):
     if ad:
         text = f"{ad.name}"
         if ad.image_url and ad.invite_link:
-            await message.answer_photo(photo=ad.image_url, caption=text, reply_markup=await kb.invite_kb())
+            await message.answer_photo(photo=ad.image_url, caption=text, reply_markup=await kb.ads_invite_kb())
             asyncio.create_task(send_advertisement(message))
         else:
             await message.answer(text)
